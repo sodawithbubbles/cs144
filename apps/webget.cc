@@ -16,7 +16,8 @@ void get_URL( const string& host, const string& path )
   http.write("Connection: close \r\n");
   http.write("\r\n");
 
-  std::string buffer;
+  string buffer;
+  
   while(!http.eof()){
     http.read(buffer);
     std::count<<buffer;
