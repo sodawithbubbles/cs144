@@ -10,7 +10,7 @@ using namespace std;
 void get_URL( const string& host, const string& path )
 {
   TCPSocket http;
-  http.connect( Address( host, "http"))
+  http.connect( Address( host, "http"));
   http.write("GET " + path + " HTTP/1.1 /r/n");
   http.write("HOST: " + host + " /r/n");
   http.write("Connection: close \r\n");
