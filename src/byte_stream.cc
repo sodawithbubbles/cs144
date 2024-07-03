@@ -47,10 +47,7 @@ uint64_t Reader::bytes_popped() const
 
 string_view Reader::peek() const
 {
-  if (buffer_.empty()) {
-    return {};
-  }
-  return {&buffer_.front(), buffer_.size()};
+  return { string_view( &buffer_.front(), 1 ) };
 }
 
 void Reader::pop( uint64_t len )
