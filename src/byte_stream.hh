@@ -30,7 +30,6 @@ protected:
   uint64_t bytes_pushed_ {};
   uint64_t bytes_popped_ {};
   std::deque<char> buffer_ {};
-  std::string_view buffer_view_ {};
   bool closed_ {};  // 0:normal  1:closed
 };
 
