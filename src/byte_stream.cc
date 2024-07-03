@@ -6,60 +6,58 @@ ByteStream::ByteStream( uint64_t capacity ) : capacity_( capacity ) {}
 
 bool Writer::is_closed() const
 {
-  // Your code here.
-  return {};
+  return closed_;
 }
 
 void Writer::push( string data )
 {
-  // Your code here.
-  (void)data;
-  return;
+  if(error_ || closed_){
+    return;
+  }
+  uint64_t space_left = capacity_ - buffer_.size();
+  uint64_t bytes_to_push = min(space_left, static_cast<uint64_t>(data.size()));
+  buffer_.insert(buffer_.end(), data.begin(), data.begin() + bytes_to_push);
+  bytes_pushed_ += bytes_to_push;
 }
 
 void Writer::close()
 {
-  // Your code here.
+  closed_ = true;
 }
 
 uint64_t Writer::available_capacity() const
 {
-  // Your code here.
-  return {};
+  return capacity_ - buffer_.size();
 }
 
 uint64_t Writer::bytes_pushed() const
 {
-  // Your code here.
-  return {};
+  return bytes_pushed_;
 }
 
 bool Reader::is_finished() const
 {
-  // Your code here.
-  return {};
+  return closed_ && buffer_.empty();
 }
 
 uint64_t Reader::bytes_popped() const
 {
-  // Your code here.
-  return {};
+  return bytes_popped_;
 }
 
 string_view Reader::peek() const
 {
-  // Your code here.
-  return {};
+  return buffer_view_;
 }
 
 void Reader::pop( uint64_t len )
 {
-  // Your code here.
-  (void)len;
+  uint64_t bytes_to_pop = min(len, static_cast<uint64_t>(buffer_.size()));
+  buffer_.erase(buffer_.begin(), buffer_.begin() + bytes_to_pop);
+  bytes_popped_ += bytes_to_pop;
 }
 
 uint64_t Reader::bytes_buffered() const
 {
-  // Your code here.
-  return {};
+  return bytes_pushed_ - bytes_popped_;
 }

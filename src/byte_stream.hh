@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <string_view>
+#include <deque> //利用deque来实现字节流中的缓冲区
 
 class Reader;
 class Writer;
@@ -22,9 +23,15 @@ public:
   bool has_error() const { return error_; }; // Has the stream had an error?
 
 protected:
-  // Please add any additional state to the ByteStream here, and not to the Writer and Reader interfaces.
   uint64_t capacity_;
-  bool error_ {};
+  bool error_ {};   // 0:normal  1:error
+  
+  // 在字节流中加入的成员变量(不可在 Writer 和 Reader 中加)
+  uint64_t bytes_pushed_ {};
+  uint64_t bytes_popped_ {};
+  std::deque<char> buffer_ {};
+  std::string_view buffer_view_ {};
+  bool closed_ {};  // 0:normal  1:closed
 };
 
 class Writer : public ByteStream
