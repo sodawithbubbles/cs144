@@ -27,7 +27,7 @@ void Writer::close()
 
 uint64_t Writer::available_capacity() const
 {
-  return capacity_ - buffer_.size();
+  return capacity_ - (bytes_pushed_ - bytes_popped_);
 }
 
 uint64_t Writer::bytes_pushed() const
@@ -55,6 +55,9 @@ string_view Reader::peek() const
 
 void Reader::pop( uint64_t len )
 {
+  if (bytes_buffered()==0) {
+    return;
+  }
   uint64_t bytes_to_pop = min(len, static_cast<uint64_t>(buffer_.size()));
   buffer_.erase(buffer_.begin(), buffer_.begin() + bytes_to_pop);
   bytes_popped_ += bytes_to_pop;
