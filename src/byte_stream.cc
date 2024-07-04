@@ -47,20 +47,21 @@ uint64_t Reader::bytes_popped() const
 
 string_view Reader::peek() const
 {
-  return { string_view( &buffer_.front(), 1 ) };
+  if ( !buffer_.empty()) {
+    return std::string_view( buffer_ );
+  }
 }
 
 void Reader::pop( uint64_t len )
 {
-  if (bytes_buffered()==0) {
-    return;
-  }
-  uint64_t bytes_to_pop = min(len, static_cast<uint64_t>(buffer_.size()));
-  buffer_.erase(0, bytes_to_pop);
-  bytes_popped_ += bytes_to_pop;
+  uint64_t buffer_size = buffer_.size();
+  uint64_t pop_size = std::min(len, buffer_size);
+
+  buffer_ = buffer_.substr(pop_size);
+  bytes_popped_ += pop_size;
 }
 
 uint64_t Reader::bytes_buffered() const
 {
-  return bytes_pushed_ - bytes_popped_;
+  return buffer_.size();
 }
