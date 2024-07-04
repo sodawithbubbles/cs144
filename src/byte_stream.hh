@@ -29,7 +29,7 @@ protected:
   // 在字节流中加入的成员变量(不可在 Writer 和 Reader 中加)
   uint64_t bytes_pushed_ {};
   uint64_t bytes_popped_ {};
-  std::deque<char> buffer_ {};
+  std::string buffer_ {};
   bool closed_ {};  // 0:normal  1:closed
 };
 

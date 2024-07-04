@@ -16,7 +16,7 @@ void Writer::push( string data )
   }
   uint64_t space_left = capacity_ - buffer_.size();
   uint64_t bytes_to_push = min(space_left, static_cast<uint64_t>(data.size()));
-  buffer_.insert(buffer_.end(), data.begin(), data.begin() + bytes_to_push);
+  buffer_.append(data, 0, bytes_to_push);
   bytes_pushed_ += bytes_to_push;
 }
 
@@ -56,7 +56,7 @@ void Reader::pop( uint64_t len )
     return;
   }
   uint64_t bytes_to_pop = min(len, static_cast<uint64_t>(buffer_.size()));
-  buffer_.erase(buffer_.begin(), buffer_.begin() + bytes_to_pop);
+  buffer_.erase(0, bytes_to_pop);
   bytes_popped_ += bytes_to_pop;
 }
 
