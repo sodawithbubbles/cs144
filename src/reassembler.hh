@@ -1,6 +1,17 @@
+/*  \file   reassembler.hh
+ *  \brief  实现reassembler.hh， 用来将字符串data写入Writer Bytestream，乱序存储，有序组装并传入Bytestream
+ *  \extends  
+ *  
+ *  \author soda water
+ *  \date   Jul.12th 2024
+ *  \
+ */ 
 #pragma once
 
 #include "byte_stream.hh"
+
+#include <list>
+#include <tuple>
 
 class Reassembler
 {
@@ -42,4 +53,14 @@ public:
 
 private:
   ByteStream output_; // the Reassembler writes to this ByteStream
+  
+  // save ordered and non-overlapped bytes(first_index, data, is_last_substring)
+  std::list<std::tuple<uint64_t, std::string, bool>> ordered_buffer_ {};
+
+  uint64_t bytes_buffered_ {};  // bytes the Reassembler buffers
+  uint64_t expected_index_ {};  // first needed byte index
+
+  void pop_attempt();   // try to write bytes into Bytestream(pop from ordered_buffer_ to Bytestream)
+  void push_bytes(uint64_t first_index, std::string data, bool is_last_substring);
+
 };

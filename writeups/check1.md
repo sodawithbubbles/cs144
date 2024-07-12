@@ -1,9 +1,9 @@
 Checkpoint 1 Writeup
 ====================
 
-My name: [your name here]
+My name: [soda water]
 
-My SUNet ID: [your sunetid here]
+My SUNet ID: [BJTU2128]
 
 I collaborated with: [list sunetids here]
 
