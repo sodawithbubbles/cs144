@@ -62,5 +62,5 @@ private:
 
   void pop_attempt();   // try to write bytes into Bytestream(pop from ordered_buffer_ to Bytestream)
   void push_bytes(uint64_t first_index, std::string data, bool is_last_substring);
-
+  void cache_bytes(uint64_t first_index, std::string data, bool is_last_substring);
 };
